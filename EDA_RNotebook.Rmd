@@ -1,0 +1,49 @@
+---
+title: "EDA"
+output: html_notebook
+---
+
+What decade has the most popular games and what genre is the game?
+ 
+
+```{r}
+# Necesarry Libraries 
+library(readr)
+install.packages("dplyr")
+library(dplyr)
+```
+
+#Reading CSV
+```{r}
+dataforEDA <- read.csv(file = "steamdata.csv", header=TRUE, stringsAsFactors=FALSE)
+head(dataforEDA)
+View(dataforEDA)
+```
+The Source of the Data is Kaggle.
+Source (https://www.kaggle.com/datasets/thedevastator/get-your-game-on-metacritic-recommendations-and?resourcedownload&select=games-features-edit.csv)
+The DataFrame has many variable, however the the ones we are most interested in are
+The Metacritic Score, ResponseName,and ReleaseDate
+
+Note: We are only using one data source since all the necessary information is present in this table.
+
+```{r}
+#I have defined a game to be good if it has a metacritic score greter that 80.
+proc = (
+  dataforEDA %>%
+    group_by(ResponseName) %>%
+    summarise(
+      n = n(),
+      Metacritic 
+    ) %>%
+    filter(
+      n > 1,
+      Metacritic > 80
+    ))
+
+
+head(proc)
+```
+
+We now have a better idea of what we need to answer our research question. We have defined a game as popular
+If it has a metacritic score of 80 and above. Thus we are one step closer to answering our research question.
+Our next goal is to use our finding in this exercise and use it in our final draft to find which era had the most popular games.
